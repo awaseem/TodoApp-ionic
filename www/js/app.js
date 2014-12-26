@@ -135,6 +135,7 @@ angular.module('todo', ['ionic'])
   $scope.onReorderTask = function(task, fromIndex, toIndex) {
     $scope.activeProject.tasks.splice(fromIndex, 1);
     $scope.activeProject.tasks.splice(toIndex, 0, task);
+    Projects.save($scope.projects);
   };
 
   // Try to create the first project, make sure to defer
