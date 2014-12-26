@@ -28,16 +28,18 @@
         </button>
       </ion-header-bar>
       <ion-content scroll="true">
-        <ion-list>
-            <ion-item ng-repeat="task in activeProject.tasks">
+        <ion-list show-delete="toggleDelete" show-reorder="toggleReorder">
+            <ion-item ng-repeat="task in activeProject.tasks" class="item-remove-animate">
                 {{task.title}}
+                <ion-delete-button class="ion-minus-circled" ng-click="onTaskDelete(task)"></ion-delete-button>
+                <ion-reorder-button class="ion-navicon" on-reorder="onReorderTask(task, $fromIndex, $toIndex)">
             </ion-item>
         </ion-list>
       </ion-content>
       <ion-footer-bar align-title="left" class="bar-balanced">
-        <button class="button">Delete</button>
+        <button class="button" ng-click="toggleDeleteButton()">Delete</button>
         <h1 class="title">Edit List</h1>
-        <button class="button">Reorder</button>
+        <button class="button" ng-click="toggleReorderButton()">Reorder</button>
       </ion-footer-bar>
     </ion-side-menu-content>
 

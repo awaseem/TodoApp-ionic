@@ -64,6 +64,10 @@ angular.module('todo', ['ionic'])
   // Grab the last active, or the first project
   $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
 
+  $scope.toggleDelete = false;
+
+  $scope.toggleReorder = false;
+
   // Called to create a new project
   $scope.newProject = function() {
     var projectTitle = prompt('Project name');
@@ -113,6 +117,25 @@ angular.module('todo', ['ionic'])
     $ionicSideMenuDelegate.toggleLeft();
   };
 
+  $scope.toggleDeleteButton = function() {
+    $scope.toggleDelete = !$scope.toggleDelete;
+    $scope.toggleReorder = false;
+  }
+
+  $scope.toggleReorderButton = function() {
+    $scope.toggleReorder = !$scope.toggleReorder;
+    $scope.toggleDelete = false;
+  }
+
+  $scope.onTaskDelete = function(task) {
+    $scope.activeProject.tasks.splice($scope.activeProject.tasks.indexOf(task), 1);
+    Projects.save($scope.projects);
+  };
+
+  $scope.onReorderTask = function(task, fromIndex, toIndex) {
+    $scope.activeProject.tasks.splice(fromIndex, 1);
+    $scope.activeProject.tasks.splice(toIndex, 0, task);
+  };
 
   // Try to create the first project, make sure to defer
   // this by using $timeout so everything is initialized
