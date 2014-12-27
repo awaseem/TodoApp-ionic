@@ -89,7 +89,8 @@ angular.module('todo', ['ionic'])
   $ionicModal.fromTemplateUrl('new-task.html', function(modal) {
     $scope.taskModal = modal;
   }, {
-    scope: $scope
+    scope: $scope,
+    animation: 'slide-in-up'
   });
 
   $scope.createTask = function(task) {
@@ -113,7 +114,7 @@ angular.module('todo', ['ionic'])
 
   $scope.closeNewTask = function() {
     $scope.taskModal.hide();
-  }
+  };
 
   $scope.toggleProjects = function() {
     $ionicSideMenuDelegate.toggleLeft();
@@ -122,19 +123,22 @@ angular.module('todo', ['ionic'])
   $scope.toggleDeleteButton = function() {
     $scope.toggleDelete = !$scope.toggleDelete;
     $scope.toggleReorder = false;
-  }
+  };
 
   $scope.toggleReorderButton = function() {
     $scope.toggleReorder = !$scope.toggleReorder;
     $scope.toggleDelete = false;
-  }
+  };
 
   $scope.toggleDeleteProjectsButton = function() {
-    $scope.toggleDeleteProjects = !$scope.toggleDeleteProjects
-  }
+    $scope.toggleDeleteProjects = !$scope.toggleDeleteProjects;
+  };
 
   $scope.onProjectDelete = function(project) {
     if ($scope.activeProject == project){
+      if ($scope.projects.length > 1){
+        $scope.activeProject = $scope.projects[0];
+      }
       project.tasks = [];
     }
     $scope.projects.splice($scope.projects.indexOf(project), 1);
