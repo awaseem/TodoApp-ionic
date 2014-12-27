@@ -18,11 +18,11 @@
 
     <!-- Center content -->
     <ion-side-menu-content>
-      <ion-header-bar class="bar-royal" align-title="center">
+      <ion-header-bar class="bar-positive" align-title="center">
         <button class="button button-icon" ng-click="toggleProjects()">
             <i class="icon ion-navicon"></i>
         </button>
-        <h1 class="title">Todo</h1>
+        <h1 class="title">{{ activeProject.title }}</h1>
         <button class="button button-icon" ng-click="newTask()">
             <i class="icon ion-compose"></i>
         </button>
@@ -31,12 +31,13 @@
         <ion-list show-delete="toggleDelete" show-reorder="toggleReorder">
             <ion-item ng-repeat="task in activeProject.tasks">
                 {{task.title}}
+                <ion-option-button class="button button-balanced" ng-click="onTaskDelete(task)">Done</ion-option-button>
                 <ion-delete-button class="ion-minus-circled" ng-click="onTaskDelete(task)"></ion-delete-button>
-                <ion-reorder-button class="ion-navicon" on-reorder="onReorderTask(task, $fromIndex, $toIndex)">
+                <ion-reorder-button class="ion-navicon" on-reorder="onReorderTask(task, $fromIndex, $toIndex)"></ion-reorder-button>
             </ion-item>
         </ion-list>
       </ion-content>
-      <ion-footer-bar align-title="left" class="bar-balanced">
+      <ion-footer-bar align-title="left" class="bar-light">
         <button class="button button-icon ion-trash-b" ng-click="toggleDeleteButton()"></button>
         <h1 class="title">Edit List</h1>
         <button class="button button-icon ion-drag" ng-click="toggleReorderButton()"></button>
@@ -64,33 +65,27 @@
   </ion-side-menus>
 
   <script id="new-task.html" type="text/ng-template">
-
   <div class="modal">
-
     <!-- Modal header bar -->
-    <ion-header-bar class="bar-secondary">
+    <ion-header-bar class="bar-balanced">
       <h1 class="title">New Task</h1>
-      <button class="button button-clear button-positive" ng-click="closeNewTask()">Cancel</button>
+      <button class="button button-icon ion-close" ng-click="closeNewTask()"></button>
     </ion-header-bar>
-
     <!-- Modal content area -->
     <ion-content>
-
       <form ng-submit="createTask(task)">
         <div class="list">
-          <label class="item item-input">
-            <input type="text" placeholder="What do you need to do?" ng-model="task.title">
+          <label class="item item-input item-floating-label">
+            <span class="input-label">New Task</span>
+            <input type="text" placeholder="Enter Task Here" ng-model="task.title">
           </label>
         </div>
         <div class="padding">
-          <button type="submit" class="button button-block button-positive">Create Task</button>
+          <button type="submit" class="button button-block button-assertive">Create Task</button>
         </div>
       </form>
-
     </ion-content>
-
   </div>
-
   </script>
 
 </body>

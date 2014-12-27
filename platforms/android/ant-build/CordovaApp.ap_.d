@@ -35,6 +35,7 @@
 /home/awaseem/Apps/todo/platforms/android/assets/www/css \
 /home/awaseem/Apps/todo/platforms/android/assets/www/lib \
 /home/awaseem/Apps/todo/platforms/android/assets/www/index.html \
+/home/awaseem/Apps/todo/platforms/android/assets/www/Background1.jpg \
 /home/awaseem/Apps/todo/platforms/android/assets/www/plugins \
 /home/awaseem/Apps/todo/platforms/android/assets/www/cordova.js \
 /home/awaseem/Apps/todo/platforms/android/assets/www/img/ionic.png \
