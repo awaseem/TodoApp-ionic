@@ -68,6 +68,8 @@ angular.module('todo', ['ionic'])
 
   $scope.toggleReorder = false;
 
+  $scope.toggleDeleteProjects = false;
+
   // Called to create a new project
   $scope.newProject = function() {
     var projectTitle = prompt('Project name');
@@ -126,6 +128,18 @@ angular.module('todo', ['ionic'])
     $scope.toggleReorder = !$scope.toggleReorder;
     $scope.toggleDelete = false;
   }
+
+  $scope.toggleDeleteProjectsButton = function() {
+    $scope.toggleDeleteProjects = !$scope.toggleDeleteProjects
+  }
+
+  $scope.onProjectDelete = function(project) {
+    if ($scope.activeProject == project){
+      project.tasks = [];
+    }
+    $scope.projects.splice($scope.projects.indexOf(project), 1);
+    Projects.save($scope.projects);
+  };
 
   $scope.onTaskDelete = function(task) {
     $scope.activeProject.tasks.splice($scope.activeProject.tasks.indexOf(task), 1);

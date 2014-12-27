@@ -23,35 +23,39 @@
             <i class="icon ion-navicon"></i>
         </button>
         <h1 class="title">Todo</h1>
-        <button class="button buttong-icon" ng-click="newTask()">
+        <button class="button button-icon" ng-click="newTask()">
             <i class="icon ion-compose"></i>
         </button>
       </ion-header-bar>
       <ion-content scroll="true">
-        <ion-list>
+        <ion-list show-delete="toggleDelete" show-reorder="toggleReorder">
             <ion-item ng-repeat="task in activeProject.tasks">
                 {{task.title}}
+                <ion-delete-button class="ion-minus-circled" ng-click="onTaskDelete(task)"></ion-delete-button>
+                <ion-reorder-button class="ion-navicon" on-reorder="onReorderTask(task, $fromIndex, $toIndex)">
             </ion-item>
         </ion-list>
       </ion-content>
       <ion-footer-bar align-title="left" class="bar-balanced">
-        <button class="button">Delete</button>
+        <button class="button button-icon ion-trash-b" ng-click="toggleDeleteButton()"></button>
         <h1 class="title">Edit List</h1>
-        <button class="button">Reorder</button>
+        <button class="button button-icon ion-drag" ng-click="toggleReorderButton()"></button>
       </ion-footer-bar>
     </ion-side-menu-content>
 
     <!-- Left menu -->
     <ion-side-menu side="left">
-      <ion-header-bar class="bar-assertive">
-        <h1 class="title">Projects</h1>
+      <ion-header-bar class="bar-assertive" align-title="center">
         <button class="button button-icon ion-plus" ng-click="newProject()">
         </button>
+        <h1 class="title">Projects</h1>
+        <button class="button button-icon ion-close" ng-click="toggleDeleteProjectsButton()"></button>
       </ion-header-bar>
-      <ion-content scroll="false">
-        <ion-list>
+      <ion-content>
+        <ion-list show-delete="toggleDeleteProjects">
             <ion-item ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
                 {{ project.title }}
+                <ion-delete-button class="ion-minus-circled" ng-click="onProjectDelete(project)"></ion-delete-button>
             </ion-item>
         </ion-list>
       </ion-content>
