@@ -55,6 +55,7 @@ angular.module('todo', ['ionic'])
     $scope.projects.push(newProject);
     Projects.save($scope.projects);
     $scope.selectProject(newProject, $scope.projects.length-1);
+    $scope.unToggleAll()
   }
 
 
@@ -69,14 +70,6 @@ angular.module('todo', ['ionic'])
   $scope.toggleReorder = false;
 
   $scope.toggleDeleteProjects = false;
-
-  // Called to create a new project
-  $scope.newProject = function() {
-    var projectTitle = prompt('Project name');
-    if(projectTitle) {
-      createProject(projectTitle);
-    }
-  };
 
   // Called to select the given project
   $scope.selectProject = function(project, index) {
@@ -93,6 +86,30 @@ angular.module('todo', ['ionic'])
     animation: 'slide-in-up'
   });
 
+  $ionicModal.fromTemplateUrl('new-project.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal){
+    $scope.modal = modal;
+  });
+
+  $scope.createNewProject = function(project) {
+      if (!project.title){
+        return;
+      }
+      createProject(project.title);
+      project.title = "";
+      $scope.closeProjectModal();
+  };
+
+  $scope.newProjectModal = function() {
+    $scope.modal.show();
+  };
+
+  $scope.closeProjectModal = function() {
+    $scope.modal.hide();
+  };
+
   $scope.createTask = function(task) {
     if(!$scope.activeProject || !task) {
       return;
@@ -101,11 +118,10 @@ angular.module('todo', ['ionic'])
       title: task.title
     });
     $scope.taskModal.hide();
-
     // Inefficient, but save all the projects
     Projects.save($scope.projects);
-
     task.title = "";
+    $scope.unToggleAll();
   };
 
   $scope.newTask = function() {
@@ -156,19 +172,19 @@ angular.module('todo', ['ionic'])
     Projects.save($scope.projects);
   };
 
-  // Try to create the first project, make sure to defer
-  // this by using $timeout so everything is initialized
-  // properly
-  $timeout(function() {
-    if($scope.projects.length == 0) {
-      while(true) {
-        var projectTitle = prompt('Your first project title:');
-        if(projectTitle) {
-          createProject(projectTitle);
-          break;
-        }
-      }
+  $scope.unToggleAll = function() {
+    $scope.toggleDelete = false;
+    $scope.toggleDeleteProjects = false;
+    $scope.toggleReorder = false;
+  };
+
+  $scope.emptyProjectsTitle = function() {
+    if($scope.projects.length == 0){
+      return false;
     }
-  });
+    else{
+      return true;
+    }
+  };
 
 });

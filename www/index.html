@@ -22,7 +22,7 @@
         <button class="button button-icon" ng-click="toggleProjects()">
             <i class="icon ion-navicon"></i>
         </button>
-        <h1 class="title">{{ activeProject.title }}</h1>
+        <h1 class="title" ng-show="emptyProjectsTitle()">{{ activeProject.title }}</h1>
         <button class="button button-icon" ng-click="newTask()">
             <i class="icon ion-compose"></i>
         </button>
@@ -47,7 +47,7 @@
     <!-- Left menu -->
     <ion-side-menu side="left">
       <ion-header-bar class="bar-assertive" align-title="center">
-        <button class="button button-icon ion-plus" ng-click="newProject()">
+        <button class="button button-icon ion-plus" ng-click="newProjectModal()">
         </button>
         <h1 class="title">Projects</h1>
         <button class="button button-icon ion-close" ng-click="toggleDeleteProjectsButton()"></button>
@@ -61,7 +61,6 @@
         </ion-list>
       </ion-content>
     </ion-side-menu>
-
   </ion-side-menus>
 
   <script id="new-task.html" type="text/ng-template">
@@ -86,6 +85,28 @@
       </form>
     </ion-content>
   </div>
+  </script>
+
+  <script id="new-project.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar-royal">
+        <h1 class="title">New Project</h1>
+        <button class="button button-icon ion-close" ng-click="closeProjectModal()"></button>
+      </ion-header-bar>
+      <ion-content>
+        <form ng-submit="createNewProject(project)">
+          <div class="list">
+            <label class="item item-input item-floating-label">
+              <span class="input-label">New Project</span>
+              <input type="text" placeholder="New Project" ng-model="project.title">
+            </label>
+          </div>
+          <div class="padding">
+            <button type="submit" class="button button-block button-dark">Create Project</button>
+          </div>
+        </form>
+      </ion-content>
+    </ion-model-view>
   </script>
 
 </body>
